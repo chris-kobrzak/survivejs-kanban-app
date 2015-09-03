@@ -9,7 +9,7 @@ var ROOT_PATH = path.resolve( __dirname )
 var config = {}
 
 var commonConfig = {
-  entry: path.resolve( ROOT_PATH, "app/main" ),
+  entry: path.resolve( ROOT_PATH, "app/main.jsx" ),
   output: {
     path: path.resolve( ROOT_PATH, "build" ),
     filename: "bundle.js"
@@ -25,6 +25,13 @@ var commonConfig = {
 
 if ( TARGET === "start" || ! TARGET ) {
   config = {
+    module: {
+      loaders: [{
+        test: /\.jsx?$/,
+        loaders: [ "babel" ],
+        include: path.resolve( ROOT_PATH, "app" )
+      }]
+    },
     devtool: "eval-source-map",
     plugins: [
       new webpack.HotModuleReplacementPlugin(),
