@@ -1,0 +1,16 @@
+{
+  "name": "kanban-app",
+  "version": "1.0.0",
+  "description": "Sample Webpack/React project from survivejs.com",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack",
+    "open": "open build/index.html"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "html-webpack-plugin": "^1.6.1",
+    "webpack": "^1.12.1"
+  }
+}
