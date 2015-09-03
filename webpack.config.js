@@ -1,9 +1,14 @@
 var path = require( "path" )
 var webpack = require( "webpack" )
+var merge = require( "webpack-merge" )
 var HtmlWebpackPlugin = require( "html-webpack-plugin" )
+
+var TARGET = process.env.npm_lifecycle_event
 var ROOT_PATH = path.resolve( __dirname )
 
-module.exports = {
+var config = {}
+
+var commonConfig = {
   entry: path.resolve( ROOT_PATH, "app/main" ),
   output: {
     path: path.resolve( ROOT_PATH, "build" ),
@@ -15,17 +20,25 @@ module.exports = {
       loaders: [ "style", "css" ],
       include: path.resolve( ROOT_PATH, "app" )
     }]
-  },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new HtmlWebpackPlugin({
-      title: "Kanban app"
-    })
-  ],
-  devServer: {
-    historyApiFallback: true,
-    hot: true,
-    inline: true,
-    progress: true
   }
 }
+
+if ( TARGET === "start" || ! TARGET ) {
+  config = {
+    devtool: "eval-source-map",
+    plugins: [
+      new webpack.HotModuleReplacementPlugin(),
+      new HtmlWebpackPlugin({
+        title: "Kanban app"
+      })
+    ],
+    devServer: {
+      historyApiFallback: true,
+      hot: true,
+      inline: true,
+      progress: true
+    }
+  }
+}
+
+module.exports = merge( commonConfig, config )
