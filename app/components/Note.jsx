@@ -2,6 +2,6 @@ import React from "react"
 
 export default class extends React.Component {
   render() {
-    return <p>Learning Webpack</p>
+    return <p>{this.props.task}</p>
   }
 }
