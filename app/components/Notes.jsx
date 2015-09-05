@@ -2,6 +2,15 @@ import React from "react"
 import Note from "./Note.jsx"
 
 export default class extends React.Component {
+  constructor(props) {
+    super( props )
+    this.bindInstanceMethods()
+  }
+
+  bindInstanceMethods() {
+    this.renderNote = this.renderNote.bind( this )
+  }
+
   render() {
     let notes = this.props.items,
       className = this.props.className || "notes"
@@ -13,10 +22,14 @@ export default class extends React.Component {
     )
   }
 
-  renderNote(note) {
+  renderNote( note ) {
+    let onEditCompleted = this.props.onEditCompleted.bind( null, note.id )
     return (
       <li key={`note${note.id}`}>
-        <Note task={note.task} />
+        <Note
+          task={note.task}
+          onEditCompleted={onEditCompleted}
+        />
       </li>
     )
   }

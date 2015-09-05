@@ -14,7 +14,13 @@ export default class extends React.Component {
   }
 
   bindInstanceMethods() {
-    this.addNote = this.addNote.bind( this )
+    let methods = [
+      "addNote",
+      "editNote"
+    ]
+    for ( let method of methods ) {
+      this[ method ] = this[ method ].bind( this )
+    }
   }
 
   render() {
@@ -23,7 +29,9 @@ export default class extends React.Component {
     return (
       <div>
         <button onClick={this.addNote}>+</button>
-        <Notes items={notes} />
+        <Notes
+          items={notes}
+          onEditCompleted={this.editNote} />
       </div>
     )
   }
@@ -32,6 +40,19 @@ export default class extends React.Component {
     let newNote = this.constructor.generateRandomNote()
     this.setState({
       notes: this.state.notes.concat( newNote )
+    })
+  }
+
+  editNote( noteId, task ) {
+    let notes = this.state.notes.map( ( note ) => {
+      if ( note.id === noteId ) {
+        note.task = task
+      }
+      return note
+    } )
+
+    this.setState({
+      notes: notes
     })
   }
 

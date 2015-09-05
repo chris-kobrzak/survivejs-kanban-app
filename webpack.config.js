@@ -41,7 +41,8 @@ if ( TARGET === "start:dev" || ! TARGET ) {
     plugins: [
       new webpack.HotModuleReplacementPlugin(),
       new HtmlWebpackPlugin({
-        title: "Kanban app"
+        title: "Kanban app",
+        template: "index-template.html"
       })
     ],
     devServer: {
