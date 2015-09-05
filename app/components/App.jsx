@@ -16,6 +16,7 @@ export default class extends React.Component {
   bindInstanceMethods() {
     let methods = [
       "addNote",
+      "deleteNote",
       "editNote"
     ]
     for ( let method of methods ) {
@@ -31,7 +32,8 @@ export default class extends React.Component {
         <button onClick={this.addNote}>+</button>
         <Notes
           items={notes}
-          onEditCompleted={this.editNote} />
+          onEditCompleted={this.editNote}
+          onDeleteCompleted={this.deleteNote} />
       </div>
     )
   }
@@ -44,14 +46,24 @@ export default class extends React.Component {
   }
 
   editNote( noteId, task ) {
-    let notes = this.state.notes
     let noteIndex = this.findNoteIndexById( noteId )
-
     if ( noteIndex < 0 ) {
       return
     }
 
+    let notes = this.state.notes
     notes[ noteIndex ].task = task
+    this.setState({ notes })
+  }
+
+  deleteNote( noteId ) {
+    let noteIndex = this.findNoteIndexById( noteId )
+    if ( noteIndex < 0 ) {
+      return
+    }
+
+    let notes = this.state.notes
+    notes.splice( noteIndex, 1 )
     this.setState({ notes })
   }
 

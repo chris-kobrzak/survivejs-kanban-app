@@ -15,6 +15,7 @@ export default class extends React.Component {
       "startEditing",
       "handleInputBlur",
       "handleKeyPress",
+      "renderDelete",
       "renderInput",
       "renderTask"
     ]
@@ -36,9 +37,19 @@ export default class extends React.Component {
   }
 
   renderTask() {
-    return (<span onClick={this.startEditing}>
-      {this.props.task}
-    </span>)
+    let renderedDelete
+    if ( this.props.onDeleteCompleted ) {
+      renderedDelete = this.renderDelete()
+    }
+
+    return (<div onClick={this.startEditing}>
+      <span>{this.props.task}</span>
+      {renderedDelete}
+    </div>)
+  }
+
+  renderDelete() {
+    return (<button onClick={this.props.onDeleteCompleted}>X</button>)
   }
 
   renderInput() {

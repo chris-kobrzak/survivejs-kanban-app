@@ -24,11 +24,13 @@ export default class extends React.Component {
 
   renderNote( note ) {
     let onEditCompleted = this.props.onEditCompleted.bind( null, note.id )
+    let onDeleteCompleted = this.props.onDeleteCompleted.bind( null, note.id )
     return (
       <li key={`note${note.id}`}>
         <Note
           task={note.task}
           onEditCompleted={onEditCompleted}
+          onDeleteCompleted={onDeleteCompleted}
         />
       </li>
     )
