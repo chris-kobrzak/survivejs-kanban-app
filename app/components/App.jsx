@@ -44,16 +44,26 @@ export default class extends React.Component {
   }
 
   editNote( noteId, task ) {
-    let notes = this.state.notes.map( ( note ) => {
-      if ( note.id === noteId ) {
-        note.task = task
-      }
-      return note
-    } )
+    let notes = this.state.notes
+    let noteIndex = this.findNoteIndexById( noteId )
 
-    this.setState({
-      notes: notes
-    })
+    if ( noteIndex < 0 ) {
+      return
+    }
+
+    notes[ noteIndex ].task = task
+    this.setState({ notes })
+  }
+
+  findNoteIndexById( id ) {
+    let notes = this.state.notes
+    let noteIndex = notes.findIndex( ( note ) => note.id === id )
+
+    if ( noteIndex < 0 ) {
+      console.warn( "Could not find note", id, notes )
+    }
+
+    return noteIndex
   }
 
   static generateRandomNote() {
