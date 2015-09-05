@@ -1,4 +1,6 @@
 import React from "react"
+import Button from "./Button.jsx"
+import EditableTextBox from "./EditableTextBox.jsx"
 
 export default class extends React.Component {
   constructor(props) {
@@ -49,12 +51,14 @@ export default class extends React.Component {
   }
 
   renderDelete() {
-    return (<button onClick={this.props.onDeleteCompleted}>X</button>)
+    return (<Button
+      text="X"
+      onClick={this.props.onDeleteCompleted}
+    />)
   }
 
   renderInput() {
-    return (<input
-      autoFocus={true}
+    return (<EditableTextBox
       defaultValue={this.props.task}
       onBlur={this.handleInputBlur}
       onKeyPress={this.handleKeyPress}

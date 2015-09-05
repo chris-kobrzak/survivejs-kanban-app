@@ -1,5 +1,6 @@
 import uuid from "node-uuid"
 import React from "react"
+import Button from "./Button.jsx"
 import Notes from "./Notes.jsx"
 import notesPacket from "../notes.js"
 
@@ -29,7 +30,7 @@ export default class extends React.Component {
 
     return (
       <div>
-        <button onClick={this.addNote}>+</button>
+        <Button onClick={this.addNote} text="+" className="add-button" />
         <Notes
           items={notes}
           onEditCompleted={this.editNote}
