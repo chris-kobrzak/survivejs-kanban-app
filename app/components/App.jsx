@@ -1,28 +1,27 @@
-import uuid from "node-uuid"
 import React from "react"
 import Button from "./Button.jsx"
 import Notes from "./Notes.jsx"
-import notesPacket from "../notes.js"
+import NoteActions from "../actions/NoteActions.js"
+import NoteStore from "../stores/NoteStore.js"
 
 export default class extends React.Component {
   constructor(props) {
     super(props)
     this.bindInstanceMethods()
 
-    this.state = {
-      notes: notesPacket
-    }
+    this.state = NoteStore.getState()
   }
 
   bindInstanceMethods() {
-    let methods = [
-      "addNote",
-      "deleteNote",
-      "editNote"
-    ]
-    for ( let method of methods ) {
-      this[ method ] = this[ method ].bind( this )
-    }
+    this.setState = this.setState.bind( this )
+  }
+
+  componentDidMount() {
+    NoteStore.listen( this.setState )
+  }
+
+  componentWillUnmount() {
+    NoteStore.unlisten( this.setState )
   }
 
   render() {
@@ -40,49 +39,14 @@ export default class extends React.Component {
   }
 
   addNote() {
-    let newNote = this.constructor.generateRandomNote()
-    this.setState({
-      notes: this.state.notes.concat( newNote )
-    })
+    NoteActions.create( {task: "New task"} )
   }
 
-  editNote( noteId, task ) {
-    let noteIndex = this.findNoteIndexById( noteId )
-    if ( noteIndex < 0 ) {
-      return
-    }
-
-    let notes = this.state.notes
-    notes[ noteIndex ].task = task
-    this.setState({ notes })
+  editNote( id, task ) {
+    NoteActions.update( {id, task} )
   }
 
-  deleteNote( noteId ) {
-    let noteIndex = this.findNoteIndexById( noteId )
-    if ( noteIndex < 0 ) {
-      return
-    }
-
-    let notes = this.state.notes
-    notes.splice( noteIndex, 1 )
-    this.setState({ notes })
-  }
-
-  findNoteIndexById( id ) {
-    let notes = this.state.notes
-    let noteIndex = notes.findIndex( ( note ) => note.id === id )
-
-    if ( noteIndex < 0 ) {
-      console.warn( "Could not find note", id, notes )
-    }
-
-    return noteIndex
-  }
-
-  static generateRandomNote() {
-    return {
-      id: uuid.v4(),
-      task: "New task"
-    }
+  deleteNote( id ) {
+    NoteActions.delete( id )
   }
 }
