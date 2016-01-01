@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "browse": "open http://localhost:8080",
+    "clean": "rm -fr build/*",
     "build": "webpack",
     "open": "open build/index.html",
+    "prebuild": "npm run clean",
     "start": "webpack-dev-server"
   },
   "author": "",
