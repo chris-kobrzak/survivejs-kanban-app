@@ -9,7 +9,9 @@
     "build": "webpack",
     "open": "open build/index.html",
     "prebuild": "npm run clean",
-    "start": "webpack-dev-server"
+    "prestart": "npm run build",
+    "start:dev": "webpack-dev-server",
+    "start": "http-server"
   },
   "author": "",
   "license": "MIT",

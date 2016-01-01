@@ -28,7 +28,7 @@ var commonConfig = {
   }
 }
 
-if ( TARGET === "start" || ! TARGET ) {
+if ( TARGET === "start:dev" || ! TARGET ) {
   config = {
     module: {
       loaders: [{
